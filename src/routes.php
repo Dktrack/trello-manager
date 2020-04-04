@@ -5,26 +5,11 @@ use Slim\Http\Response;
 
 use App\TrelloManager;
 use App\TrelloTools;
+use App\Actions\UI\UI_Home;
 // Routes
 
 $app->get('/cron', TrelloManager::class . ':doCron');
 
-$app->get('/boards', function (Request $request, Response $response, array $args) {
-    $trelloTools = new TrelloTools($this);
-    $lists = $trelloTools->getBoards();
-
-    $newResponse = $response->withHeader('Content-type', 'application/json');
-    $response->getBody()->write(json_encode($lists));
-    return $response;
-});
-
-$app->get('/lists', function (Request $request, Response $response, array $args) {
-    $trelloTools = new TrelloTools($this);
-    $lists = $trelloTools->getLists();
-
-    $newResponse = $response->withHeader('Content-type', 'application/json');
-    $response->getBody()->write(json_encode($lists));
-    return $response;
-});
+$app->get('/', UI_Home::class );
 
 
